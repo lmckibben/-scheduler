@@ -2,7 +2,6 @@ import React from "react";
 import DayListItem from "./DayListItem";
 
 export default function DayList(props) {
-  console.log('props.days', props.days);
   const listDays = props.days.map(day => (
     <DayListItem
       key={day.id} 
