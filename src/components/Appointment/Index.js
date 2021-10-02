@@ -8,7 +8,7 @@ import useVisualMode from "hooks/useVisualMode";
 
 
 export default function Appointment(props) {
-  console.log('appointmentIndex', props)
+  console.log('props.interviewers', props.interviewers)
   const EMPTY = 'EMPTY';
   const SHOW = 'SHOW';
   const CREATE = 'CREATE';
@@ -30,7 +30,7 @@ export default function Appointment(props) {
       {mode === CREATE && (
         <Form
           interview = {props.interview}
-          interviewers = {[]}
+          interviewers = {props.interviewers}
           onCancel = {() => back()}
         />
       )}
