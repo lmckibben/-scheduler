@@ -37,4 +37,25 @@ const getInterview = (state, interview) => {
   return interviewObj;
 };
 
-export { getAppointmentsForDay, getInterview };
+const getInterviewerForDay = (state, day) => {
+  const dayArray = [];
+  const interviewerArray = [];
+  for (let dayState of state.days) {
+    if (dayState.name !== day) {
+      return dayArray;
+    }
+    if (dayState.name === day) {
+      dayArray.push(...dayState.interviewers);
+    }
+  }
+  for (let interviewer in state.interviewers) {
+    for (let day of dayArray) {
+      if (day === parseInt(interviewer)) {
+        interviewerArray.push(state.interviewers[interviewer]);
+      }
+    }
+  }
+  return interviewerArray;
+};
+
+export { getAppointmentsForDay, getInterview, getInterviewerForDay };
