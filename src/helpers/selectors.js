@@ -18,6 +18,23 @@ const getAppointmentsForDay = (state, day) => {
     }
   }
   return appointmentArray;
-}
+};
 
-export { getAppointmentsForDay };
+const getInterview = (state, interview) => {
+  const interviewObj = {};
+
+  if (interview) {
+    for (let inter in state.interviewers) {
+      if (state.interviewers[inter].id == interview.interviewer) {
+        interviewObj.student = interview.student
+        interviewObj.interviewer = state.interviewers[inter]
+      }
+    }
+  } else {
+    return null;
+  }
+  
+  return interviewObj;
+};
+
+export { getAppointmentsForDay, getInterview };
