@@ -31,7 +31,7 @@ export default function Appointment(props) {
         <Form
           interview = {props.interview}
           interviewers = {[]}
-
+          onCancel = {() => back()}
         />
       )}
     </article>
