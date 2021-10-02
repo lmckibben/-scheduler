@@ -25,7 +25,7 @@ const getInterview = (state, interview) => {
 
   if (interview) {
     for (let inter in state.interviewers) {
-      if (state.interviewers[inter].id == interview.interviewer) {
+      if (state.interviewers[inter].id === parseInt(interview.interviewer)) {
         interviewObj.student = interview.student
         interviewObj.interviewer = state.interviewers[inter]
       }
@@ -41,7 +41,7 @@ const getInterviewerForDay = (state, day) => {
   const dayArray = [];
   const interviewerArray = [];
   for (let dayState of state.days) {
-    if (dayState.name !== day) {
+    if (dayState.interviewers.length === 0) {
       return dayArray;
     }
     if (dayState.name === day) {
