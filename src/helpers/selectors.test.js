@@ -6,35 +6,13 @@ const state = {
       id: 1,
       name: "Monday",
       appointments: [1, 2, 3],
-      interviewer: [
-        {  
-          "avatar": "https://i.imgur.com/LpaY82x.png",
-          "id": 1,
-          "name": "Sylvia Palmer"
-        },
-        {
-          avatar: "https://i.imgur.com/Nmx0Qxo.png",
-          id: 2,
-          name: "Tori Malcolm"
-        }
-      ]
+      interviewers: [1, 2]
     },
     {
       id: 2,
       name: "Tuesday",
       appointments: [4, 5],
-      interviewer: [
-        {  
-          "avatar": "https://i.imgur.com/LpaY82x.png",
-          "id": 1,
-          "name": "Sylvia Palmer"
-        },
-        {
-          avatar: "https://i.imgur.com/Nmx0Qxo.png",
-          id: 2,
-          name: "Tori Malcolm"
-        },
-      ]
+      interviewers: [1, 2]
     }
   ],
   appointments: {
@@ -123,7 +101,20 @@ test("getInterviewerForDay returns an array with a length matching the number of
 
 test("getInterviewerForDay returns an array containing the correct interviewer objects", () => {
   const first = getInterviewerForDay(state, "Tuesday");
-  expect(first).toEqual(state.days[1].interviewer);
+  expect(first).toEqual(
+    [
+      {  
+        "id": 1,
+        "name": "Sylvia Palmer",
+        "avatar": "https://i.imgur.com/LpaY82x.png"
+      },
+      {
+        id: 2,
+        name: "Tori Malcolm",
+        avatar: "https://i.imgur.com/Nmx0Qxo.png"
+      }
+    ]
+  );
 });
 
 test("getInterviewerForDay returns an empty array when the days data is empty", () => {
