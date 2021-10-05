@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getAppointmentsForDay } from "helpers/selectors";
 
 export default function useApplicationData() {
   const [state, setState] = useState({
@@ -11,9 +12,32 @@ export default function useApplicationData() {
   
   const setDay = day => setState({ ...state, day });
  
+  const updateSpot = (state, day, action) => {
+    let spotsLeft = 0;
+    const appointment = getAppointmentsForDay(state, day)
+    for (const i in appointment) {
+      if (!appointment[i].interview) {
+        spotsLeft++
+      }
+    }
+    for (const index in state.days) {
+      if (state.days[index].name === day) {
+        if (action === 'add') {
+          spotsLeft--
+        }
+        if (action === 'destroy') {
+          spotsLeft++
+        }
+        state.days[index].spots = spotsLeft
+      }
+    }
+    return spotsLeft
+  };
+  updateSpot(state, state.day)
 
   function bookInterview(id, interview) {
     //console.log('interview', interview);
+    updateSpot(state, state.day, 'add')
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -28,6 +52,7 @@ export default function useApplicationData() {
   }
 
   const cancelInterview = (id, interview) => {
+    updateSpot(state, state.day, 'destroy')
     const appointment = {
       ...state.appointments[id],
       interview: null
