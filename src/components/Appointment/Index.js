@@ -20,23 +20,28 @@ export default function Appointment(props) {
   const EDIT = 'Edit';
   const ERROR_SAVE = 'ERROR_SAVE';
   const ERROR_DELETE = 'ERROR_DELETE';
+  const ERROR_INTERVIEWER = 'ERROR_INTERVIEWER';
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
   function save(name, interviewer) {
-    const interview = {
-      student: name,
-      interviewer
-    };
-  
-    transition(SAVING);
-  
-    props
-      .bookInterview(props.id, interview)
-      .then(() => transition(SHOW))
-      .catch(error => transition(ERROR_SAVE, true));
+    if (interviewer) {
+      const interview = {
+        student: name,
+        interviewer
+      };
+    
+      transition(SAVING);
+    
+      props
+        .bookInterview(props.id, interview)
+        .then(() => transition(SHOW))
+        .catch(error => transition(ERROR_SAVE, true));
+    } else {
+      transition(ERROR_INTERVIEWER)
+    }
   }
   
   function destroy(event) {
@@ -95,6 +100,7 @@ export default function Appointment(props) {
       )}
       {mode === ERROR_SAVE && <Error message={"There was an error while saving appointment"} onClose={() => back()}/> }
       {mode === ERROR_DELETE && <Error message={"There was an error while deleting appointment"} onClose={() => back()}/>}
+      {mode === ERROR_INTERVIEWER && <Error message={"You must select a interviewer to continue"} onClose={() => back()}/>}
     </article>
   );
 };
