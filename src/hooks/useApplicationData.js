@@ -36,7 +36,6 @@ export default function useApplicationData() {
   updateSpot(state, state.day)
 
   function bookInterview(id, interview) {
-    //console.log('interview', interview);
     updateSpot(state, state.day, 'add')
     const appointment = {
       ...state.appointments[id],
